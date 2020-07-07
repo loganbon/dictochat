@@ -1,1 +1,1 @@
-web: gunicorn --pythonpath dictochat/app:app
+web: gunicorn --pythonpath dictochat app:app
