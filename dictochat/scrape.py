@@ -21,21 +21,17 @@ def getWordData(word):
     info['phonetic'] = phonetic
 
     word_type = soup.find('span', class_='luna-pos').contents
-    word_type = '/'.join(word_type)
-    info['type'] = word_type
+    info['type'] = word_type[0]
 
     defs = []
     meaning = soup.find('div', class_='css-1o58fj8 e1hk9ate4').find_all('div')
     for phrase in meaning:
-        phrase.find_all('span')
+        phrase = phrase.find_all('span')
         [defs.append(p.get_text()) for p in phrase]
+        defs = [d for d in defs if len(d) > 12]
     info['defs'] = defs
 
     return info
 
-def getWordAudio():
-    return None
-
-
 if __name__=='__main__':
-    print(getWordData('tome'))
+    print(getWordData('mathematics'))

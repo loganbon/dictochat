@@ -17,6 +17,8 @@ def reply():
     body = request.values.get('Body', None)
     resp = MessagingResponse()
 
+    error = "Command Error:\n\nText 'help' for options."
+
     if (str(body).lower() == 'help'):
         resp.message('Dictochat Usage Guide\n\nAdd [word]\nRemove [word]\nAudio [True/False]\n(toggles audio file inclusion)\n\nVersion 0.0.1')
 
