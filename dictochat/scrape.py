@@ -34,4 +34,5 @@ def getWordData(word):
     return info
 
 if __name__=='__main__':
-    print(getWordData('mathematics'))
+    # testing...
+    print(getWordData('ontology'))
