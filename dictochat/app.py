@@ -18,43 +18,42 @@ def reply():
     body = str(request.values.get('Body', None))
     resp = MessagingResponse()
 
-    error = "Command Error \n\nText 'help' for options."
-
     if (body.lower() == 'help'):
-        resp.message('Dictochat Usage Guide\n\nAdd [word]\nRemove [word]\nAudio [True/False]\n(toggles audio file inclusion)\n\nVersion 0.0.1')
+        resp.message('Dictochat Usage Guide\n\nAdd [word]\nRemove [word]\nDef [word] (gets definition)\nAudio [True/False]\n(sets audio file inclusion)\n\nVersion 0.0.1')
 
     command = body.split(' ')[0].lower()
-    text = ' '. join(body.split(' ')[1:])
+    text = ' '. join(body.split(' ')[1:]).lower()
+
+    dbase = util.connectDBase()
 
     if (command == 'add'):
         result = scrape.getWordData(text)
         if (result != -1):
-            # add to database if not in database
-            # set response text
-            pass
+            if util.addWord(text, {}, dbase):
+                resp.message("Word successfully added.")
+            else:
+                resp.message("Error (03):\n\nWord already exists. Text 'help' for options.")
         else:
             resp.message("Error (02):\n\nWord not found.")
 
     elif (command == 'remove'):
-        if (util.validateWord('text')):
+        if (util.validateWord(text, dbase)):
             ##
+            pass
         else:
             resp.message("Error (03):\n\nWord not in database. Text 'help' for options.")
         # remove from database if in database
 
     elif (command == 'audio'):
-        # toggle audio
+        if text in ('true', 'false'):
+            util.setAudio(text)
+        else:
+            resp.message("Error (04):\n\nInvalid command for audio state. Text 'help' for options.")
 
     else:
         resp.message("Error (00):\n\nCommand not found. Text 'help' for options.")
 
-
-    dbase = redis.from_url(os.getenv('REDIS_URL'))
-
-
     return str(resp)
-
-
 
 if __name__=='__main__':
     app.run(port=5000, debug=True, use_reloader=False)
