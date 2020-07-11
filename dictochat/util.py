@@ -6,7 +6,9 @@ def connectDBase():
 def addWord(word, mapping, dbase):
     if validateWord(word, dbase):
         return False
-    # add word
+    
+    dbase.hmset(word, mapping)
+    return True
 
 def validateWord(word, dbase):
     if (word in dbase):

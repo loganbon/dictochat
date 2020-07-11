@@ -16,15 +16,21 @@ dbase = util.connectDBase()
 
 keys = dbase.keys()
 
-word = keys[random.randint(0,len(keys)-1)]
-defs = dbase.get(word)
+word = keys[random.randint(0,len(keys)-1)].decode('UTF-8')
+mapping = dbase.hgetall(word)
 
-daily = word
+if mapping:
+    phonetic = mapping['phonetic'].decode('UTF-8')
+    word_type = mapping['type'].decode('UTF-8')
+    defs = mapping['defs'].decode('UTF-8')
+    defs_str = ''.join(['- ' + line + '\n' for line in defs])
 
-message = client.messages.create(
-                body=daily,
-                from_=send_num,
-                to=receive_num
-            )
+    daily = word + ' ' + phonetic + '\n' + word_type + '\n' + defs_str
 
-print(message.sid)
+    message = client.messages.create(
+                    body=daily,
+                    from_=send_num,
+                    to=receive_num
+                )
+
+    print(message.sid)
