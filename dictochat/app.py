@@ -30,7 +30,9 @@ def reply():
         result = scrape.getWordData(text)
         if (result != -1):
             if util.addWord(text, {}, dbase):
-                resp.message("Word successfully added.")
+                preview = scrape.getWordData(text, preview=True)
+                resp.message('Word successfully added.\n' + text + '\n' + preview['defs'][0])
+
             else:
                 resp.message("Error (03):\n\nWord already exists. Text 'docs' for options.")
         else:
@@ -38,11 +40,9 @@ def reply():
 
     elif (command == 'remove'):
         if (util.validateWord(text, dbase)):
-            ##
-            pass
+            util.removeWord(text, dbase)
         else:
             resp.message("Error (03):\n\nWord not in database. Text 'docs' for options.")
-        # remove from database if in database
 
     elif (command == 'audio'):
         if text in ('true', 'false'):

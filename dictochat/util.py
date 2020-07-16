@@ -10,6 +10,9 @@ def addWord(word, mapping, dbase):
     dbase.hmset(word, mapping)
     return True
 
+def removeWord(word, dbase):
+    dbase.delete(word)
+
 def validateWord(word, dbase):
     if (word in dbase):
         return True
