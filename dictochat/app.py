@@ -20,18 +20,18 @@ def reply():
 
     if (body.lower() == 'docs'):
         resp.message('Dictochat Usage Guide\n\nAdd [word]\nRemove [word]\nDef [word] (gets definition)\nAudio [True/False]\n(sets audio file inclusion)\n\nVersion 0.0.1')
+        return str(resp)
 
     command = body.split(' ')[0].lower()
-    text = ' '. join(body.split(' ')[1:]).lower()
+    text = ' '.join(body.split(' ')[1:]).lower()
 
     dbase = util.connectDBase()
 
     if (command == 'add'):
         result = scrape.getWordData(text)
         if (result != -1):
-            if util.addWord(text, {}, dbase):
-                preview = scrape.getWordData(text, preview=True)
-                resp.message('Word successfully added.\n' + text + '\n' + preview['defs'][0])
+            if util.addWord(text, result, dbase):
+                resp.message('Word successfully added.\n' + text + '\n' + result['defs'][0])
 
             else:
                 resp.message("Error (03):\n\nWord already exists. Text 'docs' for options.")
