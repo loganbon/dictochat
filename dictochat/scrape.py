@@ -33,6 +33,8 @@ def getWordData(word, preview = False):
 
     word_type = soup.find('span', class_='luna-pos').contents
     info['type'] = word_type[0]
+
+    info['count'] = 3
     
     return info
 

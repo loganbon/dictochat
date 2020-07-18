@@ -46,10 +46,11 @@ def reply():
             resp.message("Error (03):\n\nWord not in database. Text 'docs' for options.")
 
     elif (command == 'list' and text == 'words'):
-        if text in ('true', 'false'):
-            util.setAudio(text)
+        keys = dbase.keys()
+        if (keys):
+            resp.message(', '.join(keys))
         else:
-            resp.message("Error (04):\n\nInvalid command for audio state. Text 'docs' for options.")
+            resp.message("Error (04):\n\nNo words in database. Text 'docs' for options.")
 
     else:
         resp.message("Error (00):\n\nCommand not found. Text 'docs' for options.")
