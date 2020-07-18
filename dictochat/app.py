@@ -28,7 +28,11 @@ def reply():
     dbase = util.connectDBase()
 
     if (command == 'add'):
-        result = scrape.getWordData(text)
+        #result = scrape.getWordData(text)
+
+        resp.message('|' + command + ', ' + text + '|')
+
+        '''
         if (result != -1):
             if util.addWord(text, result, dbase):
                 resp.message('Word successfully added.\n' + text + '\n' + result['defs'][0])
@@ -36,7 +40,7 @@ def reply():
             else:
                 resp.message("Error (03):\n\nWord already exists. Text 'docs' for options.")
         else:
-            resp.message("Error (02):\n\nWord not found.")
+            resp.message("Error (02):\n\nWord not found.")'''
 
     elif (command == 'remove'):
         if (util.validateWord(text, dbase)):
