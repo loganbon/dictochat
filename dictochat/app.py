@@ -28,9 +28,9 @@ def reply():
     dbase = util.connectDBase()
 
     if (command == 'add'):
-        #result = scrape.getWordData(text)
+        result = scrape.getWordData(text)
 
-        resp.message('|' + command + ', ' + text + '|')
+        resp.message(result['phonetic'])
 
         '''
         if (result != -1):
