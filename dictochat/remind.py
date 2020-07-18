@@ -22,22 +22,21 @@ if keys:
     mapping = dbase.hgetall(word)
 
     if mapping:
-        phonetic = mapping['phonetic'].decode('UTF-8')
-        word_type = mapping['type'].decode('UTF-8')
-        defs = mapping['defs'].decode('UTF-8')
-        defs_str = ''.join(['- ' + line + '\n' for line in defs])
+        phonetic = mapping[b'phonetic'].decode('UTF-8')
+        word_type = mapping[b'type'].decode('UTF-8')
+        defs = mapping[b'defs'].decode('UTF-8')
+        defs_str = ''.join(['- ' + line + '\n' for line in defs.split('#')])
 
         util.removeWord(word, dbase)
-        if (mapping['count'] != 1):
-            mapping['count'] -= 1
+        if (mapping[b'count'] != 1):
+            #mapping[b'count'] -= 1
             util.addWord(word, mapping, dbase)
             
-        daily = word + ' ' + phonetic + '\n' + word_type + '\n' + defs_str
+        daily = word[0].upper() + word[1:] + ' ' + phonetic + '\n' + word_type + '\n' + defs_str
 
         message = client.messages.create(
                         body=daily,
                         from_=send_num,
                         to=receive_num
                     )
-
         print(message.sid)
