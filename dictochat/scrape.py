@@ -21,7 +21,7 @@ def getWordData(word, preview = False):
         phrase = phrase.find_all('span')
         [defs.append(p.get_text()) for p in phrase]
         defs = [d for d in defs if len(d) > 12]
-    info['defs'] = defs
+    info['defs'] = '#'.join(defs)
 
     if preview:
         return info
