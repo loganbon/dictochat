@@ -19,7 +19,7 @@ def reply():
     resp = MessagingResponse()
 
     if (body.lower() == 'docs'):
-        resp.message('Dictochat Usage Guide\n\nAdd [word]\nRemove [word]\nDef [word] (gets definition)\nAudio [True/False]\n(sets audio file inclusion)\n\nVersion 0.0.1')
+        resp.message('Dictochat Usage Guide\n\nAdd [word]\nRemove [word]\nList Words\n(lists all stored words)\n\nVersion 0.0.1')
         return str(resp)
 
     command = body.split(' ')[0].lower()
@@ -30,11 +30,9 @@ def reply():
     if (command == 'add'):
         result = scrape.getWordData(text)
 
-        resp.message(result['phonetic'])
-
         if (result != -1):
             if util.addWord(text, result, dbase):
-                resp.message('Word successfully added.\n' + text + '\n' + result['defs'].split('#')[0])
+                resp.message('Word successfully added.\n\n' + text[0].upper() + text[1:] + '   ' + result['phonetic'] + '\n\nDef: ' + result['defs'].split('#')[0])
 
             else:
                 resp.message("Error (03):\n\nWord already exists. Text 'docs' for options.")
@@ -47,7 +45,7 @@ def reply():
         else:
             resp.message("Error (03):\n\nWord not in database. Text 'docs' for options.")
 
-    elif (command == 'audio'):
+    elif (command == 'list' and text == 'words'):
         if text in ('true', 'false'):
             util.setAudio(text)
         else:
