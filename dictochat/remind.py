@@ -29,7 +29,7 @@ if keys:
 
         util.removeWord(word, dbase)
         if (mapping[b'count'] != 1):
-            #mapping[b'count'] -= 1
+            mapping[b'count'] = bytes([int.from_bytes(mapping[b'count'], "little") - 1])
             util.addWord(word, mapping, dbase)
             
         daily = word[0].upper() + word[1:] + ' ' + phonetic + '\n' + word_type + '\n' + defs_str
