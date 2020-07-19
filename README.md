@@ -6,7 +6,7 @@ A SMS application for word memorization that allows you to add, remove, and get 
 
 Daily Remind                           |  Add Word                                 | Docs
 :-------------------------------------:|:-----------------------------------------:|:------------------------------------:
-![remind](/images/remind.png =100x20)  | ![add-word](/images/add-word.png =100x20) | ![docs](/images/docs.png =100x20)
+![remind](/images/remind.png)          | ![add-word](/images/add-word.png)         | ![docs](/images/docs.png)
 
 
 ## Details
